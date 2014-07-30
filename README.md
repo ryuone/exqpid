@@ -11,7 +11,7 @@ Exqpid depends on qpidpn. Follow the below steps:-
 
 ### Start Exqpid
 
-	Exqpid.start() : {:ok, pid} | {:error, :not_started}
+	Exqpid.start() :: {:ok, pid} | {:error, :not_started}
 
 ### Publish to topic
 
