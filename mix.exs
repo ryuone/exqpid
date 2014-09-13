@@ -17,7 +17,7 @@ defmodule Exqpid.Mixfile do
   # Dependencies
   defp deps do
     [
-      {:qpidpn, git: "git@github.com:bakusoku/qpid-erlang.git", branch: "qpid-bakusoku_hatanaka", app: false},
+      {:qpidpn, git: "git@github.com:bakusoku/qpid-erlang.git", branch: "qpid-bakusoku", app: false},
     ]
   end
 end
