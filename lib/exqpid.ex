@@ -13,7 +13,8 @@ defmodule Exqpid do
     lib_path = deps_dir <> Application.get_env(:qpidpn, :path, "/qpidpn/priv")
     System.put_env("DYLD_LIBRARY_PATH", lib_path)
     System.put_env("LD_LIBRARY_PATH", lib_path)
-    pid = :qpidpn.start()
+    qpidpn_path = lib_path <> "/qpidpn"
+    pid = :qpidpn.start(qpidpn_path)
     if is_pid(pid) do
       {:ok, pid}
     else
