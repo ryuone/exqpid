@@ -4,7 +4,6 @@ defmodule Exqpid.Mixfile do
   def project do
     [app: :exqpid,
      version: "0.0.1",
-     elixir: "~> 0.14.3-dev",
      deps: deps]
   end
 
@@ -18,7 +17,7 @@ defmodule Exqpid.Mixfile do
   # Dependencies
   defp deps do
     [
-      {:qpidpn, git: "https://github.com/bakusoku/qpid-erlang", branch: "qpid-bakusoku", app: false},
+      {:qpidpn, git: "git@github.com:bakusoku/qpid-erlang.git", branch: "qpid-bakusoku", app: false},
     ]
   end
 end
