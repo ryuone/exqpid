@@ -9,8 +9,7 @@ defmodule Exqpid do
   """
   @spec start() :: {atom, pid} | {atom, atom} 
   def start() do
-    deps_dir = Mix.Project.deps_path
-    lib_path = deps_dir <> Application.get_env(:qpidpn, :path, "/qpidpn/priv")
+    lib_path = Application.get_env(:qpidpn, :path, System.cwd() <> "/deps/qpidpn/priv")
     System.put_env("DYLD_LIBRARY_PATH", lib_path)
     System.put_env("LD_LIBRARY_PATH", lib_path)
     qpidpn_path = lib_path <> "/qpidpn"
