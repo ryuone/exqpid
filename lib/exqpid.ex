@@ -38,7 +38,7 @@ defmodule Exqpid do
   """
   def publish(topic_name, body) do
     host = Application.get_env(:qpidpn, :host, "amqp:127.0.0.1/") ++ topic_name
-    res = :qpidpn:publish(%{address: host, body: body})
+    res = :qpidpn.publish(%{address: host, body: body})
     case res do
       :ok -> :ok
       _ -> {:error, :not_published}
