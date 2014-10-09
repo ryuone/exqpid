@@ -6,7 +6,7 @@ defmodule Exqpid do
   @doc """
   Function starts the Qpidpn process.
   """
-  @spec start() :: {atom, pid} | {atom, atom} 
+  @spec start() :: {atom, pid} | {atom, atom}
   def start() do
     lib_path = Application.get_env(:qpidpn, :path, System.cwd() <> "/deps/qpidpn/priv")
     System.put_env("DYLD_LIBRARY_PATH", lib_path)
@@ -17,68 +17,80 @@ defmodule Exqpid do
       {:ok, pid}
     else
       {:error, :not_started}
-    end  
-  end  
+    end
+  end
 
   @doc """
   Function publishes message to a topic
   """
-  @spec publish(atom, char_list, char_list) :: :ok | {atom, atom} 
+  @spec publish(atom, char_list, char_list) :: :ok | {atom, atom}
   def publish(:topic, topic_name, body) do
     host = Application.get_env(:qpidpn, :host, "amqp://127.0.0.1/") ++ 'topic://' ++ topic_name
     res = :qpidpn.publish(%{address: host, body: body})
     case res do
        :ok -> :ok
-      _ -> {:error, :not_published} 
-    end  
+      _ -> {:error, :not_published}
+    end
+  end
+
+  @doc """
+  Function publishes message to temp topic
+  """
+  def publish(topic_name, body) do
+    host = Application.get_env(:qpidpn, :host, "amqp:127.0.0.1/") ++ topic_name
+    res = :qpidpn:publish(%{address: host, body: body})
+    case res do
+      :ok -> :ok
+      _ -> {:error, :not_published}
+    end
   end
 
   @doc """
   Function publishes message to a queue
   """
-  @spec publish(atom, char_list, char_list) :: :ok | {atom, atom} 
+  @spec publish(atom, char_list, char_list) :: :ok | {atom, atom}
   def publish(:queue, queue_name, body) do
     host = Application.get_env(:qpidpn, :host, "amqp://127.0.0.1/") ++ 'queue://' ++ queue_name
     res = :qpidpn.publish(%{address: host, body: body})
     case res do
        :ok -> :ok
-      _ -> {:error, :not_published} 
-    end  
+      _ -> {:error, :not_published}
+    end
   end
 
 
   @doc """
   Function subscribe to a specified topic
   """
-  @spec subscribe(atom, char_list) :: :ok | {atom, atom} 
+  @spec subscribe(atom, char_list) :: :ok | {atom, atom}
   def subscribe(:topic, topic_name) do
     host = Application.get_env(:qpidpn, :host, "amqp://127.0.0.1/") ++ 'topic://' ++ topic_name
     res = :qpidpn.subscribe(host)
     case res do
       {:ok, ref} -> {:ok, ref}
-      _ -> {:error, :not_subscribed} 
-    end  
+      _ -> {:error, :not_subscribed}
+    end
   end
 
   @doc """
   Function subscribe to a specified queue
   """
-  @spec subscribe(atom, char_list) :: :ok | {atom, atom} 
+  @spec subscribe(atom, char_list) :: :ok | {atom, atom}
   def subscribe(:queue, queue_name) do
     host = Application.get_env(:qpidpn, :host, "amqp://127.0.0.1/") ++ 'queue://' ++ queue_name
     res = :qpidpn.subscribe(host)
     case res do
       {:ok, ref} -> {:ok, ref}
-      _ -> {:error, :not_subscribed} 
-    end  
+      _ -> {:error, :not_subscribed}
+    end
   end
 
   @doc """
-  Function to start qpidpn service 
+  Function to start qpidpn service
   """
-  @spec stop() :: :ok  
+  @spec stop() :: :ok
   def stop() do
    :qpidpn.stop()
    :ok
-  end  
+  end
 end
